@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/models")
-public class ModelController {
+public class ModelController extends BaseController {
     private final ModelService modelService;
     private final ModelMapper modelMapper;
 
@@ -31,12 +31,13 @@ public class ModelController {
 
     @RequestMapping(
             value = "/all/",
-            params = { "brandId" },
+            params = { "brandId", "modelId" },
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<ModelViewModel> getModels(@RequestParam(name = "brandId", required = false) String brandId) {
-        return this.modelService.findAllModels(brandId)
+    public List<ModelViewModel> getModels(@RequestParam(name = "brandId", required = false) String brandId,
+                                          @RequestParam(name = "modelId", required = false) String modelId) {
+        return this.modelService.findAllModels(brandId, modelId)
                 .stream()
                 .map(c -> this.modelMapper.map(c, ModelViewModel.class))
                 .collect(Collectors.toList());
@@ -53,9 +54,18 @@ public class ModelController {
         return this.modelMapper.map(modelServiceModel, ModelViewModel.class);
     }
 
-    @PostMapping("/create")
+    //@PostMapping("/create")
+    @RequestMapping(
+            value = "/create",
+            params = { },
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<ModelBindingModel> create(
-            @Valid @RequestBody ModelBindingModel modelBindingModel) {
+            @Valid @RequestBody ModelBindingModel modelBindingModel,
+            BindingResult bindingResult) {
+
+        checkBindingModelErrors(bindingResult);
 
         ModelServiceModel modelServiceModel = this.modelMapper
                 .map(modelBindingModel, ModelServiceModel.class);
@@ -65,10 +75,35 @@ public class ModelController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ModelViewModel> deleteById(@PathVariable(name="id") String id) {
+    @RequestMapping(
+            value = "/update/",
+            params = { "id" },
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<ModelBindingModel> update(
+            @RequestParam(name="id") String id,
+            @Valid @RequestBody ModelBindingModel modelBindingModel,
+            BindingResult bindingResult) {
+
+        checkBindingModelErrors(bindingResult);
+
+        ModelServiceModel modelServiceModel = this.modelMapper
+                .map(modelBindingModel, ModelServiceModel.class);
+
+        this.modelService.updateModel(id, modelServiceModel);
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(
+            value = "/delete/",
+            params = { "id" },
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<ModelViewModel> deleteById(@RequestParam(name="id") String id) {
         this.modelService.deleteModel(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     //@ResponseStatus(HttpStatus.BAD_REQUEST)

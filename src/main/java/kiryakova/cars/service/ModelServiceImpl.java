@@ -1,6 +1,7 @@
 package kiryakova.cars.service;
 
 import kiryakova.cars.common.ConstantsDefinition;
+import kiryakova.cars.domain.entities.Brand;
 import kiryakova.cars.domain.entities.Model;
 import kiryakova.cars.domain.models.service.CarServiceModel;
 import kiryakova.cars.domain.models.service.ModelServiceModel;
@@ -63,6 +64,8 @@ public class ModelServiceImpl implements ModelService {
         this.checkIfModelFound(model, modelServiceModel.getName());
 
         model.setName(modelServiceModel.getName());
+        model.setBrand(this.modelMapper
+                .map(modelServiceModel.getBrand(), Brand.class));
 
         try {
             this.modelRepository.save(model);
@@ -103,18 +106,24 @@ public class ModelServiceImpl implements ModelService {
         return this.modelMapper.map(model, ModelServiceModel.class);
     }
 
-    /*@Override
-    public List<ModelServiceModel> findAllModels() {
-        return this.modelRepository.findAllModels()
-                .stream()
-                .map(p -> this.modelMapper.map(p, ModelServiceModel.class))
-                .collect(Collectors.toList());
-    }*/
-
     @Override
-    public List<ModelServiceModel> findAllModels(String brandId) {
+    public List<ModelServiceModel> findAllModels(String brandId, String modelId) {
+        if(!brandId.isEmpty() && !modelId.isEmpty()) {
+            return this.modelRepository.findAllByBrandIdAndModelId(brandId, modelId)
+                    .stream()
+                    .map(p -> this.modelMapper.map(p, ModelServiceModel.class))
+                    .collect(Collectors.toList());
+        }
+
         if(!brandId.isEmpty()) {
             return this.modelRepository.findAllModelsByBrandId(brandId)
+                    .stream()
+                    .map(p -> this.modelMapper.map(p, ModelServiceModel.class))
+                    .collect(Collectors.toList());
+        }
+
+        if(!modelId.isEmpty()) {
+            return this.modelRepository.findAllModelsByModelId(modelId)
                     .stream()
                     .map(p -> this.modelMapper.map(p, ModelServiceModel.class))
                     .collect(Collectors.toList());

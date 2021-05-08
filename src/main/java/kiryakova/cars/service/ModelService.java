@@ -13,7 +13,7 @@ public interface ModelService {
 
     ModelServiceModel findModelById(String id);
 
-    List<ModelServiceModel> findAllModels(String brandId);
+    List<ModelServiceModel> findAllModels(String brandId, String modelId);
 
     boolean checkIfModelNameAlreadyExists(String name);
 }

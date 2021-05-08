@@ -62,25 +62,6 @@ public class CarServiceImpl implements CarService {
             );
         }
 
-        /*carServiceModel.setBrand(
-                this.brandService
-                        .findBrandById(carServiceModel.getBrand().getId())
-        );
-
-        carServiceModel.setModel(
-                this.modelService
-                        .findModelById(carServiceModel.getModel().getId())
-        );
-
-        carServiceModel.setOwner(
-                this.ownerService
-                        .findOwnerById(carServiceModel.getOwner().getId())
-        );
-
-        if(!carValidation.isValid(carServiceModel)) {
-            throw new IllegalArgumentException();
-        }*/
-
         try {
             this.carRepository.saveAndFlush(car);
         } catch (Exception ignored){
@@ -97,25 +78,6 @@ public class CarServiceImpl implements CarService {
         Car car = this.carRepository.findById(id).orElse(null);
 
         this.checkIfCarFound(car, carServiceModel.getRegNumber());
-
-        /*carServiceModel.setBrand(
-                this.brandService
-                        .findBrandById(carServiceModel.getBrand().getId())
-        );
-
-        carServiceModel.setModel(
-                this.modelService
-                        .findModelById(carServiceModel.getModel().getId())
-        );
-
-        carServiceModel.setOwner(
-                this.ownerService
-                        .findOwnerById(carServiceModel.getOwner().getId())
-        );
-
-        if(!carValidation.isValid(carServiceModel)) {
-            throw new IllegalArgumentException();
-        }*/
 
         try {
             car.setRegNumber(carServiceModel.getRegNumber().toUpperCase());
@@ -181,6 +143,13 @@ public class CarServiceImpl implements CarService {
 
         if(!brandId.isEmpty()){
             return this.carRepository.findAllByBrandId(brandId)
+                    .stream()
+                    .map(p -> this.modelMapper.map(p, CarServiceModel.class))
+                    .collect(Collectors.toList());
+        }
+
+        if(!modelId.isEmpty()) {
+            return this.carRepository.findAllByModelId(modelId)
                     .stream()
                     .map(p -> this.modelMapper.map(p, CarServiceModel.class))
                     .collect(Collectors.toList());

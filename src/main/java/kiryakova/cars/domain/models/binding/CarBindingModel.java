@@ -39,7 +39,7 @@ public class CarBindingModel {
 
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_NULL)
     @Positive(message = ConstantsDefinition.BindingModelConstants.VALUE_SHOULD_BE_POSITIVE)
-    @Max(value=9000, message = ConstantsDefinition.BindingModelConstants.VALUE_SHOULD_BE_LESS)
+    @Max(value=9000, message = ConstantsDefinition.BindingModelConstants.VALUE_SHOULD_BE_EQUAL_OR_LESS_THAN)
     public Integer getEngineVolume() {
         return engineVolume;
     }
@@ -50,7 +50,7 @@ public class CarBindingModel {
 
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_NULL)
     @Positive(message = ConstantsDefinition.BindingModelConstants.VALUE_SHOULD_BE_POSITIVE)
-    @Max(value=9000, message = ConstantsDefinition.BindingModelConstants.VALUE_SHOULD_BE_LESS)
+    @Max(value=9000, message = ConstantsDefinition.BindingModelConstants.VALUE_SHOULD_BE_EQUAL_OR_LESS_THAN)
     public Integer getEnginePower() {
         return enginePower;
     }
@@ -80,15 +80,6 @@ public class CarBindingModel {
         this.color = color;
     }
 
-
-/*    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-*/
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_EMPTY)
     public Model getModel() {
         return model;

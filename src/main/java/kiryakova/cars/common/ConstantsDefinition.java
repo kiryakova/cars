@@ -5,12 +5,11 @@ public final class ConstantsDefinition {
     public final static class BindingModelConstants {
         public static final String NOT_NULL= "Не може да бъде null !";
         public static final String NOT_EMPTY= "Не може да бъде празно !";
-        public static final String NAME_IS_NOT_CORRECT = "Името трябва да бъде от 3 до 25 символа !";
+        public static final String NAME_IS_NOT_CORRECT = "Името трябва да бъде от 2 до 25 символа !";
         public static final String VALUE_SHOULD_BE_POSITIVE = "Стойността трябва да е положителна !";
         public static final String COLOR_IS_NOT_CORRECT = "Цветът трябва да е от 3 до 12 символа !";
-        public static final String OWNER_NAME_IS_NOT_CORRECT = "Името трябва да бъде поне 2 символа !";
         public static final String REG_NUMBER_IS_NOT_CORRECT = "Некоректен регистрационен номер !";
-        public static final String VALUE_SHOULD_BE_LESS = "Стойността трябва да е равна или по-малка от 9000 !";
+        public static final String VALUE_SHOULD_BE_EQUAL_OR_LESS_THAN = "Стойността трябва да е равна или по-малка от 9000 !";
     }
 
     public final static class BrandConstants {

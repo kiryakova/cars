@@ -3,10 +3,7 @@ package kiryakova.cars.domain.models.binding;
 import kiryakova.cars.common.ConstantsDefinition;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 
 public class OwnerBindingModel {
     private String firstName;
@@ -20,7 +17,7 @@ public class OwnerBindingModel {
 
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_NULL)
     @NotEmpty(message = ConstantsDefinition.BindingModelConstants.NOT_EMPTY)
-    @Length(min = 2, max = 25, message = ConstantsDefinition.BindingModelConstants.OWNER_NAME_IS_NOT_CORRECT)
+    @Length(min = 2, max = 25, message = ConstantsDefinition.BindingModelConstants.NAME_IS_NOT_CORRECT)
     public String getFirstName() {
         return firstName;
     }
@@ -31,7 +28,7 @@ public class OwnerBindingModel {
 
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_NULL)
     @NotEmpty(message = ConstantsDefinition.BindingModelConstants.NOT_EMPTY)
-    @Length(min = 2, max = 25, message = ConstantsDefinition.BindingModelConstants.OWNER_NAME_IS_NOT_CORRECT)
+    @Length(min = 2, max = 25, message = ConstantsDefinition.BindingModelConstants.NAME_IS_NOT_CORRECT)
     public String getLastName() {
         return lastName;
     }

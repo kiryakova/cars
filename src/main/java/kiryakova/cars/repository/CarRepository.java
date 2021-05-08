@@ -33,6 +33,13 @@ public interface CarRepository extends JpaRepository<Car, String> {
 
     @Query(value = "SELECT * FROM cars c " +
             "JOIN models m ON(c.model_id = m.id) " +
+            "WHERE c.model_id = :modelId " +
+            "ORDER BY c.reg_number ASC "
+            , nativeQuery = true)
+    List<Car> findAllByModelId(@Param("modelId") String modelId);
+
+    @Query(value = "SELECT * FROM cars c " +
+            "JOIN models m ON(c.model_id = m.id) " +
             "JOIN brands b ON(m.brand_id = b.id) " +
             "WHERE m.brand_id = :brandId AND c.model_id = :modelId " +
             "ORDER BY c.reg_number ASC "
