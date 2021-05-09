@@ -108,7 +108,14 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<OwnerServiceModel> findAllOwners() {
+    public List<OwnerServiceModel> findAllOwners(String ownerId) {
+        if(!ownerId.isEmpty()) {
+            return this.ownerRepository.findAllOwnersByOwnerId(ownerId)
+                    .stream()
+                    .map(p -> this.modelMapper.map(p, OwnerServiceModel.class))
+                    .collect(Collectors.toList());
+        }
+
         return this.ownerRepository.findAllOwners()
                 .stream()
                 .map(p -> this.modelMapper.map(p, OwnerServiceModel.class))

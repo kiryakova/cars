@@ -13,7 +13,7 @@ public interface OwnerService {
 
     OwnerServiceModel findOwnerById(String id);
 
-    List<OwnerServiceModel> findAllOwners();
+    List<OwnerServiceModel> findAllOwners(String ownerId);
 
     boolean checkIfOwnerEgnAlreadyExists(Long egn);
 }

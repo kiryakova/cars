@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/owners")
-public class OwnerController {
+public class OwnerController extends BaseController {
 
     private final OwnerService ownerService;
     private final ModelMapper modelMapper;
@@ -30,9 +30,14 @@ public class OwnerController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/all")
-    public List<OwnerViewModel> getOwners() {
-        return this.ownerService.findAllOwners()
+    @RequestMapping(
+            value = "/all/",
+            params = { "ownerId" },
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<OwnerViewModel> getOwners(@RequestParam(name = "ownerId", required = false) String ownerId) {
+        return this.ownerService.findAllOwners(ownerId)
                 .stream()
                 .map(c -> this.modelMapper.map(c, OwnerViewModel.class))
                 .collect(Collectors.toList());
@@ -49,9 +54,17 @@ public class OwnerController {
         return this.modelMapper.map(ownerServiceModel, OwnerViewModel.class);
     }
 
-    @PostMapping("/create")
+    @RequestMapping(
+            value = "/create",
+            params = { },
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<OwnerBindingModel> create(
-            @Valid @RequestBody OwnerBindingModel ownerBindingModel) {
+            @Valid @RequestBody OwnerBindingModel ownerBindingModel,
+            BindingResult bindingResult) {
+
+        checkBindingModelErrors(bindingResult);
 
         OwnerServiceModel ownerServiceModel = this.modelMapper
                 .map(ownerBindingModel, OwnerServiceModel.class);
@@ -61,10 +74,18 @@ public class OwnerController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/update/{id}")
+    @RequestMapping(
+            value = "/update/",
+            params = { "id" },
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<OwnerBindingModel> update(
-            @PathVariable(name="id") String id,
-            @Valid @RequestBody OwnerBindingModel ownerBindingModel) {
+            @RequestParam(name="id") String id,
+            @Valid @RequestBody OwnerBindingModel ownerBindingModel,
+            BindingResult bindingResult) {
+
+        checkBindingModelErrors(bindingResult);
 
         OwnerServiceModel ownerServiceModel = this.modelMapper
                 .map(ownerBindingModel, OwnerServiceModel.class);
@@ -74,10 +95,15 @@ public class OwnerController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<OwnerViewModel> deleteById(@PathVariable(name="id") String id) {
+    @RequestMapping(
+            value = "/delete/",
+            params = { "id" },
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<OwnerViewModel> deleteById(@RequestParam(name="id") String id) {
         this.ownerService.deleteOwner(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     //@ResponseStatus(HttpStatus.BAD_REQUEST)
