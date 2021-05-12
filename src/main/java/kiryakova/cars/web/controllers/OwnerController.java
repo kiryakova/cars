@@ -32,12 +32,12 @@ public class OwnerController extends BaseController {
 
     @RequestMapping(
             value = "/all/",
-            params = { "ownerId" },
+            params = { },
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<OwnerViewModel> getOwners(@RequestParam(name = "ownerId", required = false) String ownerId) {
-        return this.ownerService.findAllOwners(ownerId)
+    public List<OwnerViewModel> getOwners() {
+        return this.ownerService.findAllOwners()
                 .stream()
                 .map(c -> this.modelMapper.map(c, OwnerViewModel.class))
                 .collect(Collectors.toList());

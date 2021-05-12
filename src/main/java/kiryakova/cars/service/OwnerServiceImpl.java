@@ -73,7 +73,7 @@ public class OwnerServiceImpl implements OwnerService {
         } catch (Exception ignored){
             throw new OwnerNotSavedException(
                     String.format(
-                            ConstantsDefinition.OwnerConstants.UNSUCCESSFUL_SAVED_OWNER,
+                            ConstantsDefinition.OwnerConstants.UNSUCCESSFUL_UPDATED_OWNER,
                             owner.getEgn())
             );
         }
@@ -108,13 +108,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List<OwnerServiceModel> findAllOwners(String ownerId) {
-        if(!ownerId.isEmpty()) {
-            return this.ownerRepository.findAllOwnersByOwnerId(ownerId)
-                    .stream()
-                    .map(p -> this.modelMapper.map(p, OwnerServiceModel.class))
-                    .collect(Collectors.toList());
-        }
+    public List<OwnerServiceModel> findAllOwners() {
 
         return this.ownerRepository.findAllOwners()
                 .stream()

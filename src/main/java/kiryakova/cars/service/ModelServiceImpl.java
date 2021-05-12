@@ -72,7 +72,7 @@ public class ModelServiceImpl implements ModelService {
         } catch (Exception ignored){
             throw new ModelNotSavedException(
                     String.format(
-                            ConstantsDefinition.ModelConstants.UNSUCCESSFUL_SAVED_MODEL,
+                            ConstantsDefinition.ModelConstants.UNSUCCESSFUL_UPDATED_MODEL,
                             model.getName())
             );
         }
@@ -123,7 +123,7 @@ public class ModelServiceImpl implements ModelService {
         }
 
         if(!modelId.isEmpty()) {
-            return this.modelRepository.findAllModelsByModelId(modelId)
+            return this.modelRepository.findById(modelId)
                     .stream()
                     .map(p -> this.modelMapper.map(p, ModelServiceModel.class))
                     .collect(Collectors.toList());

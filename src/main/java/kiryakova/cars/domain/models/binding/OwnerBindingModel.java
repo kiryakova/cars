@@ -48,6 +48,7 @@ public class OwnerBindingModel {
 
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_NULL)
     @NotEmpty(message = ConstantsDefinition.BindingModelConstants.NOT_EMPTY)
+    @Length(min = 5, max = 50, message = ConstantsDefinition.BindingModelConstants.ADDRESS_IS_NOT_CORRECT)
     public String getAddress() {
         return address;
     }
@@ -58,6 +59,8 @@ public class OwnerBindingModel {
 
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_NULL)
     @NotEmpty(message = ConstantsDefinition.BindingModelConstants.NOT_EMPTY)
+    @Pattern(regexp = "^([+])*([0-9]{7,14})$",
+            message = ConstantsDefinition.BindingModelConstants.PHONE_IS_NOT_CORRECT)
     public String getPhone() {
         return phone;
     }

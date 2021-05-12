@@ -13,12 +13,6 @@ import java.util.Optional;
 public interface CarRepository extends JpaRepository<Car, String> {
     Optional<Car> findByRegNumber(String regNumber);
 
-    //Optional<Car> findById(String id);
-
-    /*@Query(value = "SELECT * FROM cars WHERE id = :id"
-            , nativeQuery = true)
-    Optional<Car> findById(@Param("id") String id);*/
-
     @Query(value = "SELECT * FROM cars ORDER BY reg_number ASC"
             , nativeQuery = true)
     List<Car> findAllCars();
@@ -47,11 +41,4 @@ public interface CarRepository extends JpaRepository<Car, String> {
     List<Car> findAllByBrandIdAndModelId(@Param("brandId") String brandId,
                                          @Param("modelId") String modelId);
 
-    /*
-    @Query(value = "SELECT * FROM cars WHERE brand_id = :brandId " +
-            "AND model_id = :modelId ORDER BY reg_number ASC"
-            , nativeQuery = true)
-    List<Car> findAllByBrandIdAndModelId(@Param("brandId") String brandId,
-                                                   @Param("modelId") String modelId);
-    */
 }

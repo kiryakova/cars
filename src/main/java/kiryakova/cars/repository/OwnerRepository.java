@@ -19,8 +19,4 @@ public interface OwnerRepository extends JpaRepository<Owner, String> {
             , nativeQuery = true)
     List<Owner> findAllOwners();
 
-    @Query(value = "SELECT * FROM owners WHERE id = :ownerId " +
-            "ORDER BY first_name ASC"
-            , nativeQuery = true)
-    List<Owner> findAllOwnersByOwnerId(@Param("ownerId") String ownerId);
 }

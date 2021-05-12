@@ -6,8 +6,6 @@ import kiryakova.cars.domain.entities.Model;
 import kiryakova.cars.domain.entities.Owner;
 import kiryakova.cars.domain.enums.EngineType;
 import kiryakova.cars.domain.models.service.CarServiceModel;
-import kiryakova.cars.domain.models.view.CarAllViewModel;
-import kiryakova.cars.error.BindingModelFieldsException;
 import kiryakova.cars.error.CarNotDeletedException;
 import kiryakova.cars.error.CarNotFoundException;
 import kiryakova.cars.error.CarNotSavedException;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,8 +82,6 @@ public class CarServiceImpl implements CarService {
             car.setEnginePower(carServiceModel.getEnginePower());
             car.setEngineType(Enum.valueOf(EngineType.class, carServiceModel.getEngineType()));
             car.setColor(carServiceModel.getColor());
-            /*car.setBrand(this.modelMapper
-                    .map(carServiceModel.getBrand(), Brand.class));*/
             car.setModel(this.modelMapper
                     .map(carServiceModel.getModel(), Model.class));
             car.setOwner(this.modelMapper
@@ -97,7 +92,7 @@ public class CarServiceImpl implements CarService {
         } catch (Exception ignored){
             throw new CarNotSavedException(
                     String.format(
-                            ConstantsDefinition.CarConstants.UNSUCCESSFUL_UPDATE_CAR,
+                            ConstantsDefinition.CarConstants.UNSUCCESSFUL_UPDATED_CAR,
                             car.getRegNumber())
             );
         }

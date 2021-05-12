@@ -13,7 +13,7 @@ public interface BrandService {
 
     BrandServiceModel findBrandById(String id);
 
-    List<BrandServiceModel> findAllBrands(String brandId);
+    List<BrandServiceModel> findAllBrands();
 
     boolean checkIfBrandNameAlreadyExists(String name);
 }

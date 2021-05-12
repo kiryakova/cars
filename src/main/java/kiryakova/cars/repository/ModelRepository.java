@@ -24,11 +24,6 @@ public interface ModelRepository extends JpaRepository<Model, String> {
             , nativeQuery = true)
     List<Model> findAllModelsByBrandId(@Param("brandId") String brandId);
 
-    @Query(value = "SELECT * FROM models WHERE id = :modelId " +
-            "ORDER BY model_name ASC"
-            , nativeQuery = true)
-    List<Model> findAllModelsByModelId(@Param("modelId") String modelId);
-
     @Query(value = "SELECT * FROM models " +
             "WHERE brand_id = :brandId AND id = :modelId " +
             "ORDER BY model_name ASC "

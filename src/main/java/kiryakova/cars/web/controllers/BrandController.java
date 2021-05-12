@@ -30,21 +30,30 @@ public class BrandController extends BaseController {
         this.modelMapper = modelMapper;
     }
 
-    //@GetMapping("/all")
     @RequestMapping(
             value = "/all/",
-            params = { "brandId" },
+            params = { },
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<BrandViewModel> getBrands(@RequestParam(name = "brandId", required = false) String brandId) {
-        return this.brandService.findAllBrands(brandId)
+    public List<BrandViewModel> getBrands() {
+        return this.brandService.findAllBrands()
                 .stream()
                 .map(c -> this.modelMapper.map(c, BrandViewModel.class))
                 .collect(Collectors.toList());
     }
 
-    //@PostMapping("/create")
+    @RequestMapping(
+            value = "/",
+            params = { "id" },
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public BrandViewModel getById(@RequestParam(name="id") String id) {
+        BrandServiceModel brandServiceModel = this.brandService.findBrandById(id);
+        return this.modelMapper.map(brandServiceModel, BrandViewModel.class);
+    }
+
     @RequestMapping(
             value = "/create",
             params = { },
@@ -85,8 +94,6 @@ public class BrandController extends BaseController {
         return ResponseEntity.ok().build();
     }
 
-    //@DeleteMapping("/delete/{id}")
-    //public ResponseEntity<BrandViewModel> deleteById(@PathVariable(name="id") String id) {
     @RequestMapping(
             value = "/delete/",
             params = { "id" },
@@ -96,17 +103,6 @@ public class BrandController extends BaseController {
     public ResponseEntity<BrandViewModel> deleteById(@RequestParam(name="id") String id) {
         this.brandService.deleteBrand(id);
         return ResponseEntity.ok().build();
-    }
-
-    @RequestMapping(
-            value = "/",
-            params = { "id" },
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public BrandViewModel getById(@RequestParam(name="id") String id) {
-        BrandServiceModel brandServiceModel = this.brandService.findBrandById(id);
-        return this.modelMapper.map(brandServiceModel, BrandViewModel.class);
     }
 
     //@ResponseStatus(HttpStatus.BAD_REQUEST)

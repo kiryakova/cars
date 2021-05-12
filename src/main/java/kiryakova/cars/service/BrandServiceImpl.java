@@ -71,7 +71,7 @@ public class BrandServiceImpl implements BrandService {
         } catch (Exception ignored){
             throw new BrandNotSavedException(
                     String.format(
-                            ConstantsDefinition.BrandConstants.UNSUCCESSFUL_SAVED_BRAND,
+                            ConstantsDefinition.BrandConstants.UNSUCCESSFUL_UPDATED_BRAND,
                             brand.getName())
             );
         }
@@ -106,13 +106,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public List<BrandServiceModel> findAllBrands(String brandId) {
-        if(!brandId.isEmpty()) {
-            return this.brandRepository.findAllBrandsByBrandId(brandId)
-                    .stream()
-                    .map(p -> this.modelMapper.map(p, BrandServiceModel.class))
-                    .collect(Collectors.toList());
-        }
+    public List<BrandServiceModel> findAllBrands() {
 
         return this.brandRepository.findAllBrands()
                 .stream()

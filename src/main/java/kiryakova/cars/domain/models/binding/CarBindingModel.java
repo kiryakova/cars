@@ -5,10 +5,7 @@ import kiryakova.cars.domain.entities.Owner;
 
 import kiryakova.cars.common.ConstantsDefinition;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 public class CarBindingModel {
@@ -18,7 +15,6 @@ public class CarBindingModel {
     private Integer enginePower;
     private String engineType;
     private String color;
-    //private Brand brand;
     private Model model;
     private Owner owner;
 
@@ -27,7 +23,7 @@ public class CarBindingModel {
 
     @NotNull(message = ConstantsDefinition.BindingModelConstants.NOT_NULL)
     @NotEmpty(message = ConstantsDefinition.BindingModelConstants.NOT_EMPTY)
-    @Pattern(regexp = "^([a-z,A-Z]{2})*([0-9]{4,6})([a-z,A-Z]{2})*$",
+    @Pattern(regexp = "^([a-z,A-Z]{1,2})*([ ]{1})*([0-9]{4,6})([ ]{1})*([a-z,A-Z]{2})*$",
             message = ConstantsDefinition.BindingModelConstants.REG_NUMBER_IS_NOT_CORRECT)
     public String getRegNumber() {
         return regNumber;

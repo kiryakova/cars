@@ -30,9 +30,6 @@ public class CarController extends BaseController {
         this.modelMapper = modelMapper;
     }
 
-    //@GetMapping("/all")
-    //@GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-
     @RequestMapping(
             value = "/all/",
             params = { "brandId", "modelId" },
@@ -47,12 +44,6 @@ public class CarController extends BaseController {
                 .collect(Collectors.toList());
     }
 
-    /*@GetMapping("/car/{id}")
-    public ResponseEntity<CarViewModel> getById(@PathVariable(name="id") String id) {
-        CarServiceModel carServiceModel = this.carService.findCarById(id);
-        return ResponseEntity.ok(this.modelMapper.map(carServiceModel, CarViewModel.class));
-    }*/
-
     @RequestMapping(
             value = "/",
             params = { "id" },
@@ -64,7 +55,6 @@ public class CarController extends BaseController {
         return this.modelMapper.map(carServiceModel, CarViewModel.class);
     }
 
-    //@PostMapping("/create")
     @RequestMapping(
             value = "/create",
             params = { },
@@ -85,7 +75,6 @@ public class CarController extends BaseController {
         return ResponseEntity.ok().build();
     }
 
-    //@PutMapping("/update/{id}")
     @RequestMapping(
             value = "/update/",
             params = { "id" },
@@ -136,18 +125,4 @@ public class CarController extends BaseController {
         return this.carService.findEnumValues(enumeration);
     }
 
-    /*
-        private void checkBindingModelErrors(CarBindingModel carBindingModel, BindingResult bindingResult) {
-        List<FieldError> errors;
-        List<String> message = new ArrayList<>();
-          if(carBindingModel.getModel() == null){
-            bindingResult.addError(new FieldError("carBindingModel", "model",
-                    ConstantsDefinition.BindingModelConstants.NOT_EMPTY));
-        }
-
-        if(carBindingModel.getOwner() == null){
-            bindingResult.addError(new FieldError("carBindingModel", "owner",
-                    ConstantsDefinition.BindingModelConstants.NOT_EMPTY));
-        }
-    */
 }
