@@ -1,4 +1,4 @@
-# Spring Boot Maven Project - REST Web Service
+# Spring Boot Maven Project - REST API
 
 
 This project is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). 
